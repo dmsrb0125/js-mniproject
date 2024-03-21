@@ -1,28 +1,31 @@
 .teamMembers {
-  margin-top: 80px;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-  gap: 10px;
-  flex-wrap: wrap;
-  height: 90%;
-  width: 30%;
-  padding-left: 15px;
-  position: fixed;
-  padding-bottom: 30px;
-  border-right: 3px solid skyblue;
-  color: black;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  margin: 10px 100px;
+  border: 1px solid skyblue;
+}
+.teamMembers img {
+  object-fit: cover;
 }
 
 .member {
-  width: 80%;
-  height: 85%;
-  margin-right: 10px;
-  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+}
+.member img {
+  margin-bottom: 5px;
 }
 
-.teamMembers img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.name {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80px;
+  height: 40px;
+  background-color: grey;
+  border-radius: 20px;
 }
