@@ -20,7 +20,6 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-    <script src="../Js/theme.js"></script>
     <script type="module">
       // Firebase SDK 라이브러리 가져오기
       import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
@@ -52,7 +51,9 @@
     <div class="navbar">
       <div class="left">
         <div id="dday">스파르타 종료 : <span id="days">XX</span></div>
-        <div id="weather">날씨: 로딩중...</div>
+        <div class="screen-weather">
+          <div id="weather"><span></span>℃ (<span></span>)</div>
+        </div>
       </div>
       <div class="center-title">
         <h1>5 TEAM</h1>
@@ -243,5 +244,7 @@
       </section>
     </div>
     <script src="../Js/dday.js"></script>
+    <script src="../Js/theme.js"></script>
+    <script src="../Js/weather.js"></script>
   </body>
 </html>
