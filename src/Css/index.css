@@ -1,0 +1,20 @@
+body {
+  width: 100%;
+  height: 100vh;
+}
+
+.mainContainer {
+  margin-top: 80px;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+}
+.teamIntroduction {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 75%;
+  height: 100%;
+  margin-left: 25%;
+}
