@@ -39,6 +39,9 @@
         alert("저장완료.");
         window.location.reload();
       });
+      fetch("navbar.html")
+        .then((response) => response.text())
+        .then((data) => (document.getElementById("navbar").innerHTML = data));
     </script>
 
     <link
@@ -48,33 +51,11 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="../Css/index.css" />
-    <link rel="stylesheet" href="../Css/navigation.css" />
     <link rel="stylesheet" href="../Css/teamMembers.css" />
     <link rel="stylesheet" href="../Css/theme.css" />
   </head>
   <body class="whiteTheme">
-    <div class="navbar">
-      <div class="left">
-        <div id="dday">스파르타 종료 : <span id="days">XX</span></div>
-        <div class="screen-weather">
-          <div id="weather"><span></span>℃ (<span></span>)</div>
-        </div>
-      </div>
-      <div class="center-title">
-        <h1>5 TEAM</h1>
-      </div>
-      <div class="right">
-        <span>Home</span>
-        <span> | </span>
-        <div class="theme-switch-wrapper">
-          <label class="theme-switch" for="theme-toggle">
-            <input type="checkbox" id="theme-toggle" />
-            <div class="slider round"></div>
-          </label>
-        </div>
-      </div>
-    </div>
-
+    <div id="navbar"></div>
     <div class="mainContainer">
       <section class="teamIntroduction">
         <div
