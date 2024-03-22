@@ -31,14 +31,6 @@
       const app = initializeApp(firebaseConfig);
       const db = getFirestore(app);
 
-      $("#addMemberbtn").click(async function () {
-        let doc = {
-          number: 1,
-        };
-        await addDoc(collection(db, "members"), doc);
-        alert("저장완료.");
-        window.location.reload();
-      });
       fetch("navbar.html")
         .then((response) => response.text())
         .then((data) => {
@@ -182,6 +174,30 @@
           </div>
         </div>
       </section>
+      <div class="mypostingbox">
+        <div class="form-floating mb-3">
+          <input
+            type="email"
+            class="form-control"
+            id="image"
+            placeholder="이미지 주소"
+          />
+          <label for="image">이미지 주소</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input
+            type="email"
+            class="form-control"
+            id="title"
+            placeholder="dlfma"
+          />
+          <label for="name">이름</label>
+        </div>
+
+        <button id="addbtn" type="button" class="btn btn-primary">
+          추가하기
+        </button>
+      </div>
       <section class="teamMembers">
         <button type="button" id="addMemberbtn" class="btn btn-outline-info">
           멤버 추가
@@ -220,5 +236,6 @@
         </div>
       </section>
     </div>
+    <script src="Js/addMember/posting.js"></script>
   </body>
 </html>
