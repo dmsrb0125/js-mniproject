@@ -9,7 +9,7 @@
   object-fit: cover;
 }
 
-.member {
+.member a {
   display: flex;
   flex-direction: column;
   justify-content: center;
