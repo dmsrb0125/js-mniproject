@@ -33,7 +33,21 @@
 
       fetch("navbar.html")
         .then((response) => response.text())
-        .then((data) => (document.getElementById("navbar").innerHTML = data));
+        .then((data) => {
+          document.getElementById("navbar").innerHTML = data;
+          // 네비게이션 바가 로드되고 난 후 실행할 스크립트
+          const script1 = document.createElement("script");
+          script1.src = "Js/navbar/dday.js";
+          document.body.appendChild(script1);
+
+          const script2 = document.createElement("script");
+          script2.src = "Js/navbar/weather.js";
+          document.body.appendChild(script2);
+
+          const script3 = document.createElement("script");
+          script3.src = "Js/navbar/theme.js";
+          document.body.appendChild(script3);
+        });
     </script>
     <script src="Js/personalPage/personalPageInit.js"></script>
     <link
