@@ -1,3 +1,7 @@
-$("#addMemberbtn").click(async function () {
-  $(".mypostingbox").toggle();
+$("#addMemberbtn").click(function () {
+  if ($(".mypostingbox").css("display") === "none") {
+    $(".mypostingbox").css("display", "flex");
+  } else {
+    $(".mypostingbox").css("display", "none");
+  }
 });
