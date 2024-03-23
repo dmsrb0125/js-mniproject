@@ -19,3 +19,7 @@ body {
   height: 70%;
   border: 1px solid skyblue;
 }
+
+.featurette-divider {
+  margin: 30px 0;
+}
