@@ -63,45 +63,41 @@
     <div id="navbar"></div>
     <div class="mainContainer">
       <hr class="featurette-divider" />
-      <main class="container">
-        <p>멤버 ID: <span id="memberIdDisplay"></span></p>
-        <div class="row featurette">
-          <div class="col-md-7 order-md-2">
-            <h2 class="featurette-heading fw-normal lh-1">
-              Oh yeah, it’s that good.
-              <span class="text-body-secondary">See for yourself.</span>
-            </h2>
-            <p class="lead">
-              Another featurette? Of course. More placeholder content here to
-              give you an idea of how this layout would work with some actual
-              real-world content in place.
-            </p>
+      <p>멤버 ID: <span id="memberIdDisplay"></span></p>
+      <div class="profile">
+        <div class="profile-picture">
+          <img
+            id="profilePic"
+            src=""
+            alt="Profile Picture"
+            style="width: 200px; height: 200px"
+          />
+        </div>
+        <div class="profile-info">
+          <div id="infoDisplay">
+            <p>이름: <span id="displayName">미등록</span></p>
+            <p>나이: <span id="displayAge">미등록</span></p>
+            <p>사는 곳: <span id="displayLocation">미등록</span></p>
+            <p>MBTI: <span id="displayMbti">미등록</span></p>
+            <p>기술 스택: <span id="displaySkills">미등록</span></p>
+            <p>되고자 하는 개발자: <span id="displayDevType">미등록</span></p>
+            <p>하고 싶은 말: <span id="displayMessage">미등록</span></p>
           </div>
-          <div class="col-md-5 order-md-1">
-            <svg
-              class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
-              width="500"
-              height="500"
-              xmlns="http://www.w3.org/2000/svg"
-              role="img"
-              aria-label="Placeholder: 500x500"
-              preserveAspectRatio="xMidYMid slice"
-              focusable="false"
-            >
-              <title>Placeholder</title>
-              <rect
-                width="100%"
-                height="100%"
-                fill="var(--bs-secondary-bg)"
-              ></rect>
-              <text x="50%" y="50%" fill="var(--bs-secondary-color)" dy=".3em">
-                500x500
-              </text>
-            </svg>
-          </div>
+          <button id="editProfileBtn">수정하기</button>
+        </div>
+        <div id="editForm" style="display: none">
+          <input type="file" id="imageUpload" />
+          <input type="text" id="nameInput" placeholder="이름" />
+          <input type="number" id="ageInput" placeholder="나이" />
+          <input type="text" id="locationInput" placeholder="사는 곳" />
+          <input type="text" id="mbtiInput" placeholder="MBTI" />
+          <input type="text" id="skillsInput" placeholder="기술 스택" />
+          <input type="text" id="devTypeInput" placeholder="되고자 하는 개발자" />
+          <textarea id="messageInput" placeholder="하고 싶은 말"></textarea>
+          <button id="saveProfileBtn">저장하기</button>
         </div>
         <hr class="featurette-divider" />
-      </main>
-    </div>
+      </div>
+    <script src="/Js/personalPage/edit.js"></script>
   </body>
 </html>
