@@ -12,7 +12,8 @@
         getFirestore,
         doc,
         getDoc,
-        updateDoc, // updateDoc 함수를 import 합니다.
+        updateDoc,
+        deleteDoc,
       } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
       const firebaseConfig = {
@@ -109,6 +110,15 @@
             document.getElementById("editForm").style.display = "none";
             document.getElementById("profile-info").style.display = "block";
           });
+        document
+          .getElementById("deleteProfileBtn")
+          .addEventListener("click", async function () {
+            if (confirm("해당 멤버 정보를 삭제 하시겠습니까?")) {
+              await deleteDoc(dbRef);
+              alert("해당 멤버가 삭제 되었습니다.");
+              window.location.href = "index.html";
+            }
+          });
 
         fetchAndRenderMemberData();
       });
@@ -165,13 +175,22 @@
               <p>기술 스택 : <span id="displaySkills"></span></p>
               <p>되고자 하는 개발자 : <span id="displayDevType"></span></p>
               <p>하고 싶은 말 : <span id="displayMessage"></span></p>
-              <button
-                type="button"
-                id="editProfileBtn"
-                class="btn btn-outline-secondary"
-              >
-                수정하기
-              </button>
+              <div>
+                <button
+                  type="button"
+                  id="editProfileBtn"
+                  class="btn btn-outline-secondary"
+                >
+                  수정하기
+                </button>
+                <button
+                  id="deleteProfileBtn"
+                  type="button"
+                  class="btn btn-outline-danger"
+                >
+                  삭제하기
+                </button>
+              </div>
             </div>
           </div>
 
