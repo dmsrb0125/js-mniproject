@@ -63,41 +63,48 @@
     <div id="navbar"></div>
     <div class="mainContainer">
       <hr class="featurette-divider" />
-      <p>멤버 ID: <span id="memberIdDisplay"></span></p>
-      <div class="profile">
-        <div class="profile-picture">
-          <img
-            id="profilePic"
-            src=""
-            alt="Profile Picture"
-            style="width: 200px; height: 200px"
-          />
-        </div>
-        <div class="profile-info">
-          <div id="infoDisplay">
-            <p>이름: <span id="displayName">미등록</span></p>
-            <p>나이: <span id="displayAge">미등록</span></p>
-            <p>사는 곳: <span id="displayLocation">미등록</span></p>
-            <p>MBTI: <span id="displayMbti">미등록</span></p>
-            <p>기술 스택: <span id="displaySkills">미등록</span></p>
-            <p>되고자 하는 개발자: <span id="displayDevType">미등록</span></p>
-            <p>하고 싶은 말: <span id="displayMessage">미등록</span></p>
+      <div class="main">
+        <p><span id="memberIdDisplay"></span></p>
+        <div class="profile">
+          <div class="profile-picture">
+            <img id="profilePic" src="" style="width: 250px; height: 250px" />
           </div>
-          <button id="editProfileBtn">수정하기</button>
+          <div id="profile-info" class="profile-info">
+            <div id="infoDisplay">
+              <p>나이: <span id="displayAge"></span></p>
+              <p>사는 곳: <span id="displayLocation"></span></p>
+              <p>MBTI: <span id="displayMbti"></span></p>
+              <p>기술 스택: <span id="displaySkills"></span></p>
+              <p>되고자 하는 개발자: <span id="displayDevType"></span></p>
+              <p>하고 싶은 말: <span id="displayMessage"></span></p>
+            </div>
+            <button
+              type="button"
+              id="editProfileBtn"
+              class="btn btn-outline-secondary"
+            >
+              수정하기
+            </button>
+          </div>
+          <div id="editForm" style="display: none">
+            <!-- 이미지 URL 입력을 위한 input 필드로 변경 -->
+            <input type="text" id="imageUploadUrl" placeholder="이미지 주소" />
+            <input type="number" id="ageInput" placeholder="나이" />
+            <input type="text" id="locationInput" placeholder="사는 곳" />
+            <input type="text" id="mbtiInput" placeholder="MBTI" />
+            <input type="text" id="skillsInput" placeholder="기술 스택" />
+            <input
+              type="text"
+              id="devTypeInput"
+              placeholder="되고자 하는 개발자"
+            />
+            <textarea id="messageInput" placeholder="하고 싶은 말"></textarea>
+            <button id="saveProfileBtn">저장하기</button>
+          </div>
         </div>
-        <div id="editForm" style="display: none">
-          <input type="file" id="imageUpload" />
-          <input type="text" id="nameInput" placeholder="이름" />
-          <input type="number" id="ageInput" placeholder="나이" />
-          <input type="text" id="locationInput" placeholder="사는 곳" />
-          <input type="text" id="mbtiInput" placeholder="MBTI" />
-          <input type="text" id="skillsInput" placeholder="기술 스택" />
-          <input type="text" id="devTypeInput" placeholder="되고자 하는 개발자" />
-          <textarea id="messageInput" placeholder="하고 싶은 말"></textarea>
-          <button id="saveProfileBtn">저장하기</button>
-        </div>
-        <hr class="featurette-divider" />
       </div>
-    <script src="/Js/personalPage/edit.js"></script>
+      <hr class="featurette-divider" />
+    </div>
+    <script src="Js/personalPage/edit.js"></script>
   </body>
 </html>

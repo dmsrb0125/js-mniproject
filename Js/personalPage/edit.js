@@ -1,18 +1,23 @@
-document
-  .getElementById("editProfileBtn")
-  .addEventListener("click", function () {
-    document.getElementById("editForm").style.display = "block"; // 폼 표시
-    document.getElementById("infoDisplay").style.display = "none"; // 정보 숨기기
-  });
+document.addEventListener("DOMContentLoaded", function () {
+  // 수정하기 버튼 클릭 이벤트
+  document
+    .getElementById("editProfileBtn")
+    .addEventListener("click", function () {
+      document.getElementById("editForm").style.display = "block"; // 에딧폼을 표시
+      document.getElementById("profile-info").style.display = "none"; // 프로필 정보를 숨김
+    });
 
-document
-  .getElementById("saveProfileBtn")
-  .addEventListener("click", function () {
-    // 입력 받은 데이터로 업데이트 로직 구현
-    // 예를 들어, Firebase에 저장하는 코드를 추가
+  // 저장하기 버튼 클릭 이벤트
+  document
+    .getElementById("saveProfileBtn")
+    .addEventListener("click", function () {
+      document.getElementById("editForm").style.display = "none"; // 에딧폼을 숨김
+      document.getElementById("profile-info").style.display = "block"; // 프로필 정보를 다시 표시
 
-    // 정보를 업데이트한 후
-    document.getElementById("editForm").style.display = "none"; // 폼 숨기기
-    document.getElementById("infoDisplay").style.display = "block"; // 정보 표시
-    // 여기에서 각 span 태그의 내용도 업데이트 해야 합니다.
-  });
+      // 여기에 프로필 정보를 저장하는 코드를 추가하세요.
+      // 예: Firebase에 데이터 저장 등
+
+      // 저장 후에 페이지를 새로고침하거나, 사용자에게 알림을 표시할 수 있습니다.
+      // 예: alert("프로필이 저장되었습니다.");
+    });
+});
