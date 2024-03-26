@@ -14,6 +14,12 @@
         getDoc,
         updateDoc,
         deleteDoc,
+        collection,
+        addDoc,
+        query,
+        orderBy,
+        getDocs,
+        serverTimestamp,
       } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
       const firebaseConfig = {
@@ -40,6 +46,7 @@
             const memberData = docSnap.data();
 
             // 기본 정보 및 이미지 렌더링
+            document.title = `${memberData.name} 페이지`;
             document.getElementById("name").textContent = memberData.name;
             document.getElementById("profilePic").src =
               memberData.image || "path/to/default/image.png";
@@ -119,6 +126,53 @@
               window.location.href = "index.html";
             }
           });
+
+        $("#submitGuestbook").click(async function () {
+          let name = $("#guestName").val();
+          let message = $("#guestMessage").val();
+
+          let doc = {
+            message: message,
+            name: name,
+          };
+          const urlParams = new URLSearchParams(window.location.search);
+          const memberId = urlParams.get("memberId");
+          await addDoc(collection(db, "members", memberId, "guestbook"), doc);
+          alert("작성 완료.");
+          window.location.reload();
+        });
+        async function renderGuestbookEntries() {
+          const urlParams = new URLSearchParams(window.location.search);
+          const memberId = urlParams.get("memberId");
+          const guestbookRef = collection(db, "members", memberId, "guestbook");
+          const querySnapshot = await getDocs(guestbookRef);
+
+          $("#guestbookEntries").empty(); // 기존 방명록 내용을 지웁니다.
+
+          querySnapshot.forEach((doc) => {
+            const entry = doc.data();
+            const entryElement = `
+      <div class="guestbook-entry">
+        <span class="guestbook-name">${entry.name}:</span>
+        <p class="guestbook-message">${entry.message}</p>
+        <button class="btn btn-danger delete-guestbook-entry" data-id="${doc.id}">x</button>
+      </div>
+    `;
+            $("#guestbookEntries").append(entryElement);
+          });
+
+          // 삭제 버튼 이벤트 바인딩
+          $(".delete-guestbook-entry").click(async function () {
+            const docId = $(this).data("id");
+            await deleteDoc(doc(db, "members", memberId, "guestbook", docId));
+            renderGuestbookEntries(); // 방명록 다시 렌더링
+          });
+        }
+
+        // 페이지 로드 시 방명록 렌더링
+        $(document).ready(function () {
+          renderGuestbookEntries();
+        });
 
         fetchAndRenderMemberData();
       });
@@ -253,7 +307,6 @@
           <textarea id="guestMessage" placeholder="방명록 내용"></textarea>
           <button id="submitGuestbook" class="btn btn-primary">작성하기</button>
         </div>
-
         <hr class="featurette-divider" />
       </div>
     </div>

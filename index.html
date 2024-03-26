@@ -30,6 +30,13 @@
       // Firebase 인스턴스 초기화
       const app = initializeApp(firebaseConfig);
       const db = getFirestore(app);
+      $("#addMemberbtn").click(function () {
+        if ($(".mypostingbox").css("display") === "none") {
+          $(".mypostingbox").css("display", "flex");
+        } else {
+          $(".mypostingbox").css("display", "none");
+        }
+      });
 
       $("#addbtn").click(async function () {
         let image = $("#image").val();
@@ -246,6 +253,5 @@
         </button>
       </section>
     </div>
-    <script src="Js/addMember/posting.js"></script>
   </body>
 </html>
