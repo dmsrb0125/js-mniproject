@@ -1,4 +1,4 @@
-let url = "https://spartacodingclub.shop/sparta_api/weather/seoul";
+/*let url = "http://spartacodingclub.shop/sparta_api/weather/seoul";
 fetch(url)
   .then((res) => res.json())
   .then((data) => {
@@ -13,4 +13,4 @@ fetch(url)
     }
   })
 
-  .catch((error) => console.log("Error:", error));
+  .catch((error) => console.log("Error:", error));*/
