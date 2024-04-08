@@ -12,9 +12,6 @@ function onGeoOk(position) {
       const temp = Math.ceil(data.main.temp - 273.15);
       city.innerText = ` (${data.name})`;
       weather.innerText = `${data.weather[0].main} / ${temp}°C`;
-
-      const color = temp > 10 ? "#fbc4ab" : "blue";
-      document.querySelector("#temp").style.color = color;
     });
 }
 
