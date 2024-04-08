@@ -4,8 +4,15 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>팀소개 프로젝트</title>
+    <title>15지는 블로그</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
     <script type="module">
       // Firebase SDK 라이브러리 가져오기
       import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
@@ -18,25 +25,18 @@
 
       // For Firebase JS SDK v7.20.0 and later, measurementId is optional
       const firebaseConfig = {
-        apiKey: "AIzaSyBPMReE-tcQ6Bx43oSoizq725rrdQ9Fx9E",
-        authDomain: "sparta-87f88.firebaseapp.com",
-        projectId: "sparta-87f88",
-        storageBucket: "sparta-87f88.appspot.com",
-        messagingSenderId: "296182026935",
-        appId: "1:296182026935:web:f6d094e79ed39d815fb332",
-        measurementId: "G-C7C8MHE9R1",
+        apiKey: "AIzaSyAfN5PZcj9NbBj2vdB8JMFQp_zTAm-xHuk",
+        authDomain: "js-miniproject.firebaseapp.com",
+        projectId: "js-miniproject",
+        storageBucket: "js-miniproject.appspot.com",
+        messagingSenderId: "682214502456",
+        appId: "1:682214502456:web:686883842015c32e59f6cd",
+        measurementId: "G-G9NFH0GQ2E",
       };
 
       // Firebase 인스턴스 초기화
       const app = initializeApp(firebaseConfig);
       const db = getFirestore(app);
-      $("#addMemberbtn").click(function () {
-        if ($(".mypostingbox").css("display") === "none") {
-          $(".mypostingbox").css("display", "flex");
-        } else {
-          $(".mypostingbox").css("display", "none");
-        }
-      });
 
       $("#addbtn").click(async function () {
         let image = $("#image").val();
@@ -77,24 +77,6 @@
 
         $(".teamMembers").append(temp_html);
       });
-
-      fetch("navbar.html")
-        .then((response) => response.text())
-        .then((data) => {
-          document.getElementById("navbar").innerHTML = data;
-          // 네비게이션 바가 로드되고 난 후 실행할 스크립트
-          const script1 = document.createElement("script");
-          script1.src = "Js/navbar/dday.js";
-          document.body.appendChild(script1);
-
-          const script2 = document.createElement("script");
-          script2.src = "Js/navbar/weather.js";
-          document.body.appendChild(script2);
-
-          const script3 = document.createElement("script");
-          script3.src = "Js/navbar/theme.js";
-          document.body.appendChild(script3);
-        });
     </script>
 
     <link
@@ -103,127 +85,122 @@
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="Css/index.css" />
-    <link rel="stylesheet" href="Css/teamMembers.css" />
-    <link rel="stylesheet" href="Css/theme.css" />
+    <link rel="stylesheet" href="css/index.css" />
+    <link rel="stylesheet" href="css/teamMembers.css" />
+    <link rel="stylesheet" href="css/navbar.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
   </head>
-  <body class="whiteTheme">
-    <div id="navbar"></div>
-    <div class="mainContainer">
-      <hr class="featurette-divider" />
-      <section class="teamIntroduction">
-        <div
-          class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary"
-        >
-          <div class="col-lg-6 px-0">
-            <h1 class="display-4 fst-italic">
-              Title of a longer featured blog post
-            </h1>
-            <p class="lead my-3">
-              Multiple lines of text that form the lede, informing new readers
-              quickly and efficiently about what’s most interesting in this
-              post’s contents.
-            </p>
-            <p class="lead mb-0">
-              <a href="#" class="text-body-emphasis fw-bold"
-                >Continue reading...</a
-              >
-            </p>
-          </div>
-          <div class="row mb-2">
-            <div class="col-md-6">
-              <div
-                class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative"
-              >
-                <div class="col p-4 d-flex flex-column position-static">
-                  <strong class="d-inline-block mb-2 text-primary-emphasis"
-                    >World</strong
-                  >
-                  <h3 class="mb-0">Featured post</h3>
-                  <div class="mb-1 text-body-secondary">Nov 12</div>
-                  <p class="card-text mb-auto">
-                    This is a wider card with supporting text below as a natural
-                    lead-in to additional content.
-                  </p>
-                  <a
-                    href="#"
-                    class="icon-link gap-1 icon-link-hover stretched-link"
-                  >
-                    Continue reading
-                    <svg class="bi">
-                      <use xlink:href="#chevron-right"></use>
-                    </svg>
-                  </a>
-                </div>
-                <div class="col-auto d-none d-lg-block">
-                  <svg
-                    class="bd-placeholder-img"
-                    width="200"
-                    height="250"
-                    xmlns="http://www.w3.org/2000/svg"
-                    role="img"
-                    aria-label="Placeholder: Thumbnail"
-                    preserveAspectRatio="xMidYMid slice"
-                    focusable="false"
-                  >
-                    <title>Placeholder</title>
-                    <rect width="100%" height="100%" fill="#55595c"></rect>
-                    <text x="50%" y="50%" fill="#eceeef" dy=".3em">
-                      Thumbnail
-                    </text>
-                  </svg>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div
-                class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative"
-              >
-                <div class="col p-4 d-flex flex-column position-static">
-                  <strong class="d-inline-block mb-2 text-success-emphasis"
-                    >Design</strong
-                  >
-                  <h3 class="mb-0">Post title</h3>
-                  <div class="mb-1 text-body-secondary">Nov 11</div>
-                  <p class="mb-auto">
-                    This is a wider card with supporting text below as a natural
-                    lead-in to additional content.
-                  </p>
-                  <a
-                    href="#"
-                    class="icon-link gap-1 icon-link-hover stretched-link"
-                  >
-                    Continue reading
-                    <svg class="bi">
-                      <use xlink:href="#chevron-right"></use>
-                    </svg>
-                  </a>
-                </div>
-                <div class="col-auto d-none d-lg-block">
-                  <svg
-                    class="bd-placeholder-img"
-                    width="200"
-                    height="250"
-                    xmlns="http://www.w3.org/2000/svg"
-                    role="img"
-                    aria-label="Placeholder: Thumbnail"
-                    preserveAspectRatio="xMidYMid slice"
-                    focusable="false"
-                  >
-                    <title>Placeholder</title>
-                    <rect width="100%" height="100%" fill="#55595c"></rect>
-                    <text x="50%" y="50%" fill="#eceeef" dy=".3em">
-                      Thumbnail
-                    </text>
-                  </svg>
-                </div>
-              </div>
-            </div>
-          </div>
+
+  <body>
+    <div class="navbar">
+      <div class="left-container">
+        <div class="weather">
+          <span class="static-color">오늘의 날씨 :</span>
+          <span id="temp"></span>
         </div>
+        <div class="countdown">
+          <span class="static-color">부트캠프 종료 :</span>
+          <span id="countdown"></span>
+        </div>
+      </div>
+
+      <div class="title-container">
+        <h1 class="title"><img src="img/logo.png" / width="300px"></h1>
+      </div>
+      <div class="right-container">
+        <div class="home">
+          <a href="index.html">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="30"
+              height="30"
+              fill="currentColor"
+              class="bi bi-house-door-fill"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5"
+              />
+            </svg>
+          </a>
+        </div>
+
+        <div class="theme-switch">
+          <!-- 테마 토글 버튼 -->
+          <button
+            class="theme-btn light"
+            onclick="changeTheme('light')"
+            title="Light mode"
+          >
+            <img src="https://assets.codepen.io/210284/sun.png" alt="sun" />
+          </button>
+          <button
+            class="theme-btn dark"
+            onclick="changeTheme('dark')"
+            title="Dark mode"
+          >
+            <img src="https://assets.codepen.io/210284/moon.png" alt="moon" />
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="mainContainer">
+      <div class="animate__animated animate__fadeIn">
+        <!-- 메인 소개글 -->
+        <section class="mainIntroduce">
+          <h1>
+            <span style="color: #0c347a"><b>15지는 팀</b></span
+            >의 <br />
+            <span style="color: #0c347a"><b>15지는 블로그</b></span
+            >를 소개합니다.
+          </h1>
+          <h6>
+            우리는 블라블라블라블라블라블라블라<br />
+            달디달디달디달디단 십오조입니다.
+          </h6>
+          <img
+            src="img/mimojieg.png"
+            style="
+              width: 600px;
+              height: 500px;
+              filter: drop-shadow(8px 4px 4px #c3c3c3);
+            "
+          />
+        </section>
+      </div>
+      <!-- 기존 hr에 class왜 지정하는건지 모르겠어서 그냥 임의로 바꿔봤습니다.. -->
+      <hr />
+      <!-- <hr class="featurette-divider" /> -->
+      <section class="teamIntroduction">
+        <!-- 팀 소개 글 -->
+        <h1 style="color: #0c347a"><b>"15지는조"</b></h1>
+        <p>
+          15지는 조는 "이은규", "김윤재", "최유진"으로 이루어진 조입니다.<br />
+          백엔드 개발자가 되기 위해 열심히 정진중입니다.<br />
+          아래의 프로필을 클릭하여 15지는 조의 조원들에 대해 알아보세요!<br /><br />
+        </p>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="30"
+          height="30"
+          fill="currentColor"
+          class="bi bi-chevron-compact-down"
+          viewBox="0 0 16 16"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M1.553 6.776a.5.5 0 0 1 .67-.223L8 9.44l5.776-2.888a.5.5 0 1 1 .448.894l-6 3a.5.5 0 0 1-.448 0l-6-3a.5.5 0 0 1-.223-.67"
+          />
+        </svg>
       </section>
-      <hr class="featurette-divider" />
-      <div class="mypostingbox">
+      <!-- 기존 hr에 class왜 지정하는건지 모르겠어서 그냥 임의로 바꿔봤습니다.. -->
+      <hr />
+      <!-- <hr class="featurette-divider" /> -->
+      <section class="mypostingbox">
         <div class="form-floating mb-3">
           <input
             type="email"
@@ -242,16 +219,21 @@
           />
           <label for="name">이름</label>
         </div>
-
         <button id="addbtn" type="button" class="btn btn-primary">
           추가하기
         </button>
-      </div>
+      </section>
       <section class="teamMembers">
         <button type="button" id="addMemberbtn" class="btn btn-outline-info">
           멤버 추가
         </button>
+        <div class="member"></div>
       </section>
     </div>
+    <script src="js/theme.js"></script>
+    <script src="js/weather.js"></script>
+    <script src="js/scroll.js"></script>
+    <script src="js/posting.js"></script>
+    <script src="js/dday.js"></script>
   </body>
 </html>

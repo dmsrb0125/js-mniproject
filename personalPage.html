@@ -6,6 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>개인 소개 페이지</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="css/personalPage.css" />
+    <link rel="stylesheet" href="css/navbar.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
       import {
@@ -23,15 +36,14 @@
       } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
       const firebaseConfig = {
-        apiKey: "AIzaSyBPMReE-tcQ6Bx43oSoizq725rrdQ9Fx9E",
-        authDomain: "sparta-87f88.firebaseapp.com",
-        projectId: "sparta-87f88",
-        storageBucket: "sparta-87f88.appspot.com",
-        messagingSenderId: "296182026935",
-        appId: "1:296182026935:web:f6d094e79ed39d815fb332",
-        measurementId: "G-C7C8MHE9R1",
+        apiKey: "AIzaSyAfN5PZcj9NbBj2vdB8JMFQp_zTAm-xHuk",
+        authDomain: "js-miniproject.firebaseapp.com",
+        projectId: "js-miniproject",
+        storageBucket: "js-miniproject.appspot.com",
+        messagingSenderId: "682214502456",
+        appId: "1:682214502456:web:686883842015c32e59f6cd",
+        measurementId: "G-G9NFH0GQ2E",
       };
-
       // Firebase 인스턴스 초기화
       const app = initializeApp(firebaseConfig);
       const db = getFirestore(app);
@@ -58,12 +70,10 @@
               memberData.location || "";
             document.getElementById("displayMbti").textContent =
               memberData.mbti || "";
-            document.getElementById("displaySkills").textContent =
-              memberData.skills || "";
-            document.getElementById("displayDevType").textContent =
-              memberData.devType || "";
-            document.getElementById("displayMessage").textContent =
-              memberData.message || "";
+            document.getElementById("displaySpecialty").textContent =
+              memberData.specialty || "";
+            document.getElementById("displayFavoriteFood").textContent =
+              memberData.favoriteFood || "";
 
             // Edit form에도 데이터 세팅
             document.getElementById("imageUploadUrl").value =
@@ -72,12 +82,10 @@
             document.getElementById("locationInput").value =
               memberData.location || "";
             document.getElementById("mbtiInput").value = memberData.mbti || "";
-            document.getElementById("skillsInput").value =
-              memberData.skills || "";
-            document.getElementById("devTypeInput").value =
-              memberData.devType || "";
-            document.getElementById("messageInput").value =
-              memberData.message || "";
+            document.getElementById("specialtyInput").value =
+              memberData.specialty || "";
+            document.getElementById("favoriteFoodInput").value =
+              memberData.favoriteFood || "";
           } else {
             console.log("No such document!");
           }
@@ -97,18 +105,17 @@
             const age = document.getElementById("ageInput").value;
             const location = document.getElementById("locationInput").value;
             const mbti = document.getElementById("mbtiInput").value;
-            const skills = document.getElementById("skillsInput").value;
-            const devType = document.getElementById("devTypeInput").value;
-            const message = document.getElementById("messageInput").value;
+            const specialty = document.getElementById("specialtyInput").value;
+            const favoriteFood =
+              document.getElementById("favoriteFoodInput").value;
 
             const updatedData = {
               image,
               age,
               location,
               mbti,
-              skills,
-              devType,
-              message,
+              specialty,
+              favoriteFood,
             };
             await updateDoc(dbRef, updatedData);
 
@@ -176,139 +183,169 @@
 
         fetchAndRenderMemberData();
       });
-
-      fetch("navbar.html")
-        .then((response) => response.text())
-        .then((data) => {
-          document.getElementById("navbar").innerHTML = data;
-          // 네비게이션 바가 로드되고 난 후 실행할 스크립트
-          const script1 = document.createElement("script");
-          script1.src = "Js/navbar/dday.js";
-          document.body.appendChild(script1);
-
-          const script2 = document.createElement("script");
-          script2.src = "Js/navbar/weather.js";
-          document.body.appendChild(script2);
-
-          const script3 = document.createElement("script");
-          script3.src = "Js/navbar/theme.js";
-          document.body.appendChild(script3);
-        });
     </script>
-
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-      crossorigin="anonymous"
-    />
-    <link rel="stylesheet" href="Css/theme.css" />
-    <link rel="stylesheet" href="Css/personalPage.css" />
   </head>
-  <body class="whiteTheme">
-    <div id="navbar"></div>
-    <div class="mainContainer">
-      <hr class="featurette-divider" />
-      <div class="main">
-        <div class="profile">
-          <div class="left-profile">
-            <span id="name"></span>
-            <div class="profile-picture">
-              <img
-                id="profilePic"
-                src="data:image/jpeg;base64,..."
-                style="width: 300px; height: 300px"
-              />
-            </div>
-          </div>
-          <div id="profile-info" class="profile-info">
-            <div id="infoDisplay">
-              <p>나이 : <span id="displayAge"></span></p>
-              <p>사는 곳 : <span id="displayLocation"></span></p>
-              <p>MBTI : <span id="displayMbti"></span></p>
-              <p>기술 스택 : <span id="displaySkills"></span></p>
-              <p>되고자 하는 개발자 : <span id="displayDevType"></span></p>
-              <p>하고 싶은 말 : <span id="displayMessage"></span></p>
-              <div>
-                <button
-                  type="button"
-                  id="editProfileBtn"
-                  class="btn btn-outline-secondary"
-                >
-                  수정하기
-                </button>
-                <button
-                  id="deleteProfileBtn"
-                  type="button"
-                  class="btn btn-outline-danger"
-                >
-                  삭제하기
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div id="editForm" style="display: none">
-            <input type="text" id="imageUploadUrl" placeholder="이미지 주소" />
-            <!-- 이미지 URL이 길 수 있으므로 제한을 200자로 설정 -->
-            <input
-              type="number"
-              id="ageInput"
-              placeholder="나이"
-              maxlength="10"
-            />
-            <input
-              type="text"
-              id="locationInput"
-              placeholder="사는 곳"
-              maxlength="10"
-            />
-            <input
-              type="text"
-              id="mbtiInput"
-              placeholder="MBTI"
-              maxlength="10"
-            />
-            <input
-              type="text"
-              id="skillsInput"
-              placeholder="기술 스택"
-              maxlength="20"
-            />
-            <input
-              type="text"
-              id="devTypeInput"
-              placeholder="되고자 하는 개발자"
-              maxlength="20"
-            />
-            <textarea
-              id="messageInput"
-              placeholder="하고 싶은 말"
-              maxlength="20"
-            ></textarea>
-            <button
-              id="saveProfileBtn"
-              type="button"
-              class="btn btn-outline-primary"
-            >
-              저장하기
-            </button>
-          </div>
+  <body>
+    <div class="navbar">
+      <div class="left-container">
+        <div class="weather">
+          <span>오늘의 날씨 :</span> <span id="temp"></span>
+        </div>
+        <div class="countdown">
+          <span>부트캠프 종료 :</span> <span id="countdown"></span>
         </div>
       </div>
-      <hr class="featurette-divider" />
-      <div class="guestbook-container">
-        <div class="guestbook-posts">
-          <div id="guestbookEntries"></div>
+      <div class="title-container">
+        <h1 class="title"><img src="img/logo.png" / width="300px"></h1>
+      </div>
+      <div class="right-container">
+        <div class="home">
+          <a href="index.html">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="30"
+              height="30"
+              fill="currentColor"
+              class="bi bi-house-door-fill"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5"
+              />
+            </svg>
+          </a>
         </div>
-        <hr class="featurette-divider" />
-        <div class="guestbook-write">
-          <input type="text" id="guestName" placeholder="작성자" />
-          <textarea id="guestMessage" placeholder="방명록 내용"></textarea>
-          <button id="submitGuestbook" class="btn btn-primary">작성하기</button>
+
+        <div class="theme-switch">
+          <!-- 테마 토글 버튼 -->
+          <button
+            class="theme-btn light"
+            onclick="changeTheme('light')"
+            title="Light mode"
+          >
+            <img src="https://assets.codepen.io/210284/sun.png" alt="sun" />
+          </button>
+          <button
+            class="theme-btn dark"
+            onclick="changeTheme('dark')"
+            title="Dark mode"
+          >
+            <img src="https://assets.codepen.io/210284/moon.png" alt="moon" />
+          </button>
         </div>
-        <hr class="featurette-divider" />
       </div>
     </div>
+    <div class="mainContainer">
+      <
+      <div class="mainContainer">
+        <hr class="featurette-divider" />
+        <div class="main">
+          <div class="profile">
+            <div class="left-profile">
+              <span id="name"></span>
+              <div class="profile-picture">
+                <img
+                  id="profilePic"
+                  src="data:image/jpeg;base64,..."
+                  style="width: 300px; height: 300px"
+                />
+              </div>
+            </div>
+            <div id="profile-info" class="profile-info">
+              <div id="infoDisplay">
+                <p>나이 : <span id="displayAge"></span></p>
+                <p>사는 곳 : <span id="displayLocation"></span></p>
+                <p>MBTI : <span id="displayMbti"></span></p>
+                <p>특기 : <span id="displaySpecialty"></span></p>
+                <p>최애 음식 : <span id="displayFavoriteFood"></span></p>
+                <div>
+                  <button
+                    type="button"
+                    id="editProfileBtn"
+                    class="btn btn-outline-secondary"
+                  >
+                    수정하기
+                  </button>
+                  <button
+                    id="deleteProfileBtn"
+                    type="button"
+                    class="btn btn-outline-danger"
+                  >
+                    삭제하기
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div id="editForm" style="display: none">
+              <input
+                type="text"
+                id="imageUploadUrl"
+                placeholder="이미지 주소"
+              />
+              <!-- 이미지 URL이 길 수 있으므로 제한을 200자로 설정 -->
+              <input
+                type="number"
+                id="ageInput"
+                placeholder="나이"
+                maxlength="10"
+              />
+              <input
+                type="text"
+                id="locationInput"
+                placeholder="사는 곳"
+                maxlength="10"
+              />
+              <input
+                type="text"
+                id="mbtiInput"
+                placeholder="MBTI"
+                maxlength="10"
+              />
+              <input
+                type="text"
+                id="specialtyInput"
+                placeholder="특기"
+                maxlength="10"
+              />
+
+              <input
+                type="text"
+                id="favoriteFoodInput"
+                placeholder="최애 음식"
+                maxlength="10"
+              />
+              <button
+                id="saveProfileBtn"
+                type="button"
+                class="btn btn-outline-primary"
+              >
+                저장하기
+              </button>
+            </div>
+          </div>
+        </div>
+        <hr class="featurette-divider" />
+        <div class="guestbook-container">
+          <div class="guestbook-posts">
+            <div id="guestbookEntries"></div>
+          </div>
+          <hr class="featurette-divider" />
+          <div class="guestbook-write">
+            <input type="text" id="guestName" placeholder="작성자" />
+            <textarea id="guestMessage" placeholder="방명록 내용"></textarea>
+            <button id="submitGuestbook" class="btn btn-primary">
+              작성하기
+            </button>
+          </div>
+          <hr class="featurette-divider" />
+        </div>
+      </div>
+    </div>
+
+    <script src="js/theme.js"></script>
+    <script src="js/weather.js"></script>
+    <script src="js/scroll.js"></script>
+    <script src="js/dday.js"></script>
   </body>
 </html>

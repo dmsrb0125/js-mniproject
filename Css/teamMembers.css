@@ -30,3 +30,25 @@
   background-color: grey;
   border-radius: 20px;
 }
+
+.addMember {
+  display: flex;
+  width: 500px;
+  height: 500px;
+  background-color: beige;
+  border: 1px solid black;
+  border-radius: 10px;
+}
+
+.mypostingbox {
+  display: none;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 300px;
+  height: 250px;
+  margin: 30px auto;
+  border-radius: 5px;
+  border: 3px solid skyblue;
+  padding: 10px;
+  color: gray;
+}
