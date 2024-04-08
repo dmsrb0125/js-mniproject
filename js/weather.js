@@ -1,16 +1,25 @@
-/*let url = "http://spartacodingclub.shop/sparta_api/weather/seoul";
-fetch(url)
-  .then((res) => res.json())
-  .then((data) => {
-    let temp = data["temp"];
-    $("#temp").text(temp + "도");
+const API_KEY = "78e9ace00c38f0c21930e949408f036e";
 
-    // 온도에 따른 색상 변경
-    if (temp > 10) {
-      $("#temp").css("color", "#fbc4ab "); // 따뜻할 때 색상
-    } else {
-      $("#temp").css("color", "blue"); // 추울 때 색상
-    }
-  })
+function onGeoOk(position) {
+  const lat = position.coords.latitude;
+  const lon = position.coords.longitude;
+  const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}`;
+  fetch(url)
+    .then((response) => response.json())
+    .then((data) => {
+      const weather = document.querySelector("#weather span:first-child");
+      const city = document.querySelector("#weather span:last-child");
+      const temp = Math.ceil(data.main.temp - 273.15);
+      city.innerText = ` (${data.name})`;
+      weather.innerText = `${data.weather[0].main} / ${temp}°C`;
 
-  .catch((error) => console.log("Error:", error));*/
+      const color = temp > 10 ? "#fbc4ab" : "blue";
+      document.querySelector("#temp").style.color = color;
+    });
+}
+
+function onGeoError() {
+  alert("Can't find you. No weather for you.");
+}
+
+navigator.geolocation.getCurrentPosition(onGeoOk, onGeoError);
