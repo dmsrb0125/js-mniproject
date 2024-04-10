@@ -139,8 +139,9 @@
           let message = $("#guestMessage").val();
 
           let doc = {
-            message: message,
             name: name,
+            message: message,
+            timestamp: serverTimestamp(), // 현재 시간 추가
           };
           const urlParams = new URLSearchParams(window.location.search);
           const memberId = urlParams.get("memberId");
@@ -152,19 +153,21 @@
           const urlParams = new URLSearchParams(window.location.search);
           const memberId = urlParams.get("memberId");
           const guestbookRef = collection(db, "members", memberId, "guestbook");
-          const querySnapshot = await getDocs(guestbookRef);
+          // 타임스탬프를 기준으로 문서를 내림차순으로 정렬
+          const q = query(guestbookRef, orderBy("timestamp", "desc"));
+          const querySnapshot = await getDocs(q);
 
           $("#guestbookEntries").empty(); // 기존 방명록 내용을 지웁니다.
 
           querySnapshot.forEach((doc) => {
             const entry = doc.data();
             const entryElement = `
-      <div class="guestbook-entry">
-        <span class="guestbook-name">${entry.name}:</span>
-        <p class="guestbook-message">${entry.message}</p>
-        <button class="btn btn-danger delete-guestbook-entry" data-id="${doc.id}">x</button>
-      </div>
-    `;
+<div class="guestbook-entry">
+  <span class="guestbook-name">${entry.name}:</span>
+  <p class="guestbook-message">${entry.message}</p>
+  <button class="btn btn-danger delete-guestbook-entry" data-id="${doc.id}">x</button>
+</div>
+`;
             $("#guestbookEntries").append(entryElement);
           });
 
