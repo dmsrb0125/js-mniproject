@@ -52,3 +52,7 @@
   padding: 10px;
   color: gray;
 }
+#addMemberbtn {
+  width: 150px;
+  margin: 20px auto;
+}
