@@ -19,4 +19,6 @@ function onGeoError() {
   alert("Can't find you. No weather for you.");
 }
 
-navigator.geolocation.getCurrentPosition(onGeoOk, onGeoError);
+document.addEventListener("DOMContentLoaded", () => {
+  navigator.geolocation.getCurrentPosition(onGeoOk, onGeoError);
+});
