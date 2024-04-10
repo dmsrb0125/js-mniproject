@@ -193,19 +193,49 @@
           });
 
         $("#submitGuestbook").click(async function () {
-          let name = $("#guestName").val();
-          let message = $("#guestMessage").val();
-          const docRef = await addDoc(
-            collection(db, "members", memberId, "guestbook"),
-            {
-              name,
-              message,
-              timestamp: serverTimestamp(),
-              likes: 0,
-            }
-          );
-          alert("작성 완료.");
-          renderGuestbookEntries(); // 방명록 다시 렌더링
+          let name = $("#guestName").val().trim(); // 앞뒤 공백 제거
+          let message = $("#guestMessage").val().trim(); // 앞뒤 공백 제거
+
+          // 작성자 이름 누락 입력 검사
+          if (name === "") {
+            alert("작성자 이름을 입력해주세요.");
+            return; // 함수 실행 종료
+          }
+
+          // 작성자 이름 길이 검사
+          if (name.length > 10) {
+            alert("작성자 이름은 10자 이내로 입력해주세요.");
+            return; // 함수 실행 종료
+          }
+
+          if (message === "") {
+            alert("내용을 입력해주세요.");
+            return; // 함수 실행 종료
+          }
+
+          // 내용 길이 검사
+          if (message.length > 50) {
+            alert("내용은 50자 이내로 입력해주세요.");
+            return; // 함수 실행 종료
+          }
+
+          // 유효성 검사를 통과한 경우, 방명록에 데이터 추가
+          try {
+            const docRef = await addDoc(
+              collection(db, "members", memberId, "guestbook"),
+              {
+                name,
+                message,
+                timestamp: serverTimestamp(),
+                likes: 0,
+              }
+            );
+            alert("작성 완료.");
+            renderGuestbookEntries(); // 방명록 다시 렌더링
+          } catch (error) {
+            console.error("방명록 작성 중 오류 발생:", error);
+            alert("방명록을 작성하는데 실패했습니다.");
+          }
         });
 
         async function renderGuestbookEntries() {
@@ -410,8 +440,17 @@
           </div>
           <hr class="featurette-divider" />
           <div class="guestbook-write">
-            <input type="text" id="guestName" placeholder="작성자" />
-            <textarea id="guestMessage" placeholder="방명록 내용"></textarea>
+            <input
+              type="text"
+              id="guestName"
+              placeholder="작성자"
+              maxlength="10"
+            />
+            <textarea
+              id="guestMessage"
+              placeholder="방명록 내용"
+              maxlength="50"
+            ></textarea>
             <button id="submitGuestbook" class="btn btn-primary">
               작성하기
             </button>
