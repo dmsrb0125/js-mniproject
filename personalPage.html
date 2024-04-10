@@ -33,6 +33,7 @@
         orderBy,
         getDocs,
         serverTimestamp,
+        increment,
       } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
       const firebaseConfig = {
@@ -44,52 +45,15 @@
         appId: "1:682214502456:web:686883842015c32e59f6cd",
         measurementId: "G-G9NFH0GQ2E",
       };
-      // Firebase 인스턴스 초기화
+
       const app = initializeApp(firebaseConfig);
       const db = getFirestore(app);
+
       document.addEventListener("DOMContentLoaded", async function () {
         const urlParams = new URLSearchParams(window.location.search);
         const memberId = urlParams.get("memberId");
         const dbRef = doc(db, "members", memberId);
-
-        async function fetchAndRenderMemberData() {
-          const docSnap = await getDoc(dbRef);
-          if (docSnap.exists()) {
-            const memberData = docSnap.data();
-
-            // 기본 정보 및 이미지 렌더링
-            document.title = `${memberData.name} 페이지`;
-            document.getElementById("name").textContent = memberData.name;
-            document.getElementById("profilePic").src =
-              memberData.image || "path/to/default/image.png";
-
-            // 추가 정보 렌더링
-            document.getElementById("displayAge").textContent =
-              memberData.age || "";
-            document.getElementById("displayLocation").textContent =
-              memberData.location || "";
-            document.getElementById("displayMbti").textContent =
-              memberData.mbti || "";
-            document.getElementById("displaySpecialty").textContent =
-              memberData.specialty || "";
-            document.getElementById("displayFavoriteFood").textContent =
-              memberData.favoriteFood || "";
-
-            // Edit form에도 데이터 세팅
-            document.getElementById("imageUploadUrl").value =
-              memberData.image || "";
-            document.getElementById("ageInput").value = memberData.age || "";
-            document.getElementById("locationInput").value =
-              memberData.location || "";
-            document.getElementById("mbtiInput").value = memberData.mbti || "";
-            document.getElementById("specialtyInput").value =
-              memberData.specialty || "";
-            document.getElementById("favoriteFoodInput").value =
-              memberData.favoriteFood || "";
-          } else {
-            console.log("No such document!");
-          }
-        }
+        fetchAndRenderMemberData();
 
         document
           .getElementById("editProfileBtn")
@@ -118,12 +82,11 @@
               favoriteFood,
             };
             await updateDoc(dbRef, updatedData);
-
-            // 업데이트 후 정보 다시 불러와서 화면에 표시 (새로고침 없이)
             fetchAndRenderMemberData();
             document.getElementById("editForm").style.display = "none";
             document.getElementById("profile-info").style.display = "block";
           });
+
         document
           .getElementById("deleteProfileBtn")
           .addEventListener("click", async function () {
@@ -137,54 +100,77 @@
         $("#submitGuestbook").click(async function () {
           let name = $("#guestName").val();
           let message = $("#guestMessage").val();
-
-          let doc = {
-            name: name,
-            message: message,
-            timestamp: serverTimestamp(), // 현재 시간 추가
-          };
-          const urlParams = new URLSearchParams(window.location.search);
-          const memberId = urlParams.get("memberId");
-          await addDoc(collection(db, "members", memberId, "guestbook"), doc);
+          const docRef = await addDoc(
+            collection(db, "members", memberId, "guestbook"),
+            {
+              name,
+              message,
+              timestamp: serverTimestamp(),
+              likes: 0,
+            }
+          );
           alert("작성 완료.");
-          window.location.reload();
+          renderGuestbookEntries(); // 방명록 다시 렌더링
         });
+
         async function renderGuestbookEntries() {
-          const urlParams = new URLSearchParams(window.location.search);
-          const memberId = urlParams.get("memberId");
           const guestbookRef = collection(db, "members", memberId, "guestbook");
-          // 타임스탬프를 기준으로 문서를 내림차순으로 정렬
           const q = query(guestbookRef, orderBy("timestamp", "desc"));
           const querySnapshot = await getDocs(q);
-
-          $("#guestbookEntries").empty(); // 기존 방명록 내용을 지웁니다.
+          $("#guestbookEntries").empty();
 
           querySnapshot.forEach((doc) => {
             const entry = doc.data();
             const entryElement = `
-<div class="guestbook-entry">
-  <span class="guestbook-name">${entry.name}:</span>
-  <p class="guestbook-message">${entry.message}</p>
-  <button class="btn btn-danger delete-guestbook-entry" data-id="${doc.id}">x</button>
-</div>
-`;
+    <div class="guestbook-entry">
+      <span class="guestbook-name">${entry.name}:</span>
+      <p class="guestbook-message">${entry.message} </p>
+      
+      <button class="btn btn-primary like-button" data-id="${
+        doc.id
+      }">👍</button>
+      <span class="likes-count"> ${entry.likes || 0}</span>
+      <button class="btn btn-danger delete-guestbook-entry" data-id="${
+        doc.id
+      }">❌</button>
+    </div>
+    `;
             $("#guestbookEntries").append(entryElement);
           });
 
-          // 삭제 버튼 이벤트 바인딩
+          // '좋아요' 버튼 이벤트 리스너 추가
+          $(".like-button").click(async function () {
+            const docId = $(this).data("id");
+            const guestbookDocRef = doc(
+              db,
+              "members",
+              memberId,
+              "guestbook",
+              docId
+            );
+            await updateDoc(guestbookDocRef, { likes: increment(1) });
+            renderGuestbookEntries(); // '좋아요' 수 업데이트 후 다시 렌더링
+          });
+
+          // '삭제' 버튼 이벤트 리스너 추가
           $(".delete-guestbook-entry").click(async function () {
             const docId = $(this).data("id");
             await deleteDoc(doc(db, "members", memberId, "guestbook", docId));
-            renderGuestbookEntries(); // 방명록 다시 렌더링
+            renderGuestbookEntries(); // 삭제 후 다시 렌더링
           });
         }
 
-        // 페이지 로드 시 방명록 렌더링
-        $(document).ready(function () {
-          renderGuestbookEntries();
-        });
+        async function fetchAndRenderMemberData() {
+          const docSnap = await getDoc(dbRef);
+          if (docSnap.exists()) {
+            const memberData = docSnap.data();
+            // 멤버 데이터 렌더링 로직...
+          } else {
+            console.log("No such document!");
+          }
+        }
 
-        fetchAndRenderMemberData();
+        renderGuestbookEntries(); // 초기 페이지 로드 시 방명록 렌더링
       });
     </script>
   </head>
