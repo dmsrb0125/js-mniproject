@@ -85,7 +85,7 @@
 - [x] 개인페이지 레이아웃, 디자인
 - [x] 개인정보 수정기능
 - [x] 해당 멤버정보 삭제 기능
-- [x] 방명록 기능(등록, 삭제)
+- [x] 방명록 기능(등록, 좋아요 ,삭제)
 
 ## Rest API
 
@@ -129,8 +129,14 @@ fireBase / js-miniProject
   요청 본문: { "name": "작성자","message": "방명록 메시지" }
   응답: 추가된 메시지 정보
 
+- 방명록 좋아요
+  POST /members/{memberId}/guestbook/like
+  설명: 특정 팀원의 방명록에서 특정 메시지에 대한 '좋아요' 수를 1 증가시킵니다.
+  요청 본문: 없음
+  응답: '좋아요' 추가 성공 여부 및 업데이트된 '좋아요' 수
+
 - 방명록 삭제
-  DELETE /members/{memberId}/guestbook/{messageId}
+  DELETE /members/{memberId}/guestbook
   설명: 특정 팀원의 방명록에서 특정 메시지를 삭제합니다.
   응답: 삭제 성공 여부
 
