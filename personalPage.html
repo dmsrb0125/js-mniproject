@@ -106,11 +106,62 @@
             const image = document.getElementById("imageUploadUrl").value;
             const age = document.getElementById("ageInput").value;
             const location = document.getElementById("locationInput").value;
-            const mbti = document.getElementById("mbtiInput").value;
+            const mbti = document
+              .getElementById("mbtiInput")
+              .value.toUpperCase(); // MBTI는 대문자로 변환
             const specialty = document.getElementById("specialtyInput").value;
             const favoriteFood =
               document.getElementById("favoriteFoodInput").value;
 
+            // 나이: 숫자만 허용, 길이 제한 3자
+            if (!/^\d+$/.test(age) || age.length > 3) {
+              alert("나이는 숫자만 3자리 이내로 입력해주세요.");
+              return;
+            }
+
+            // 사는 곳: 길이 제한 20자
+            if (location.length > 20) {
+              alert("사는 곳은 20자 이내로 입력해주세요.");
+              return;
+            }
+
+            // MBTI: 길이 제한 4자, 유효한 MBTI 유형 검사
+            const validMbtiTypes = [
+              "ISTJ",
+              "ISFJ",
+              "INFJ",
+              "INTJ",
+              "ISTP",
+              "ISFP",
+              "INFP",
+              "INTP",
+              "ESTP",
+              "ESFP",
+              "ENFP",
+              "ENTP",
+              "ESTJ",
+              "ESFJ",
+              "ENFJ",
+              "ENTJ",
+            ];
+            if (!validMbtiTypes.includes(mbti)) {
+              alert("유효한 MBTI 유형을 입력해주세요. (예: INFP, ESTJ)");
+              return;
+            }
+
+            // 특기: 길이 제한 20자
+            if (specialty.length > 20) {
+              alert("특기는 20자 이내로 입력해주세요.");
+              return;
+            }
+
+            // 최애 음식: 길이 제한 20자
+            if (favoriteFood.length > 20) {
+              alert("최애 음식은 20자 이내로 입력해주세요.");
+              return;
+            }
+
+            // 모든 유효성 검사를 통과한 경우, 데이터 업데이트
             const updatedData = {
               image,
               age,
@@ -119,13 +170,18 @@
               specialty,
               favoriteFood,
             };
-            await updateDoc(dbRef, updatedData);
-
-            // 업데이트 후 정보 다시 불러와서 화면에 표시 (새로고침 없이)
-            fetchAndRenderMemberData();
-            document.getElementById("editForm").style.display = "none";
-            document.getElementById("profile-info").style.display = "block";
+            try {
+              await updateDoc(dbRef, updatedData);
+              alert("정보가 업데이트 되었습니다.");
+              fetchAndRenderMemberData(); // 업데이트 후 정보 다시 불러와서 화면에 표시
+              document.getElementById("editForm").style.display = "none";
+              document.getElementById("profile-info").style.display = "block";
+            } catch (error) {
+              console.error("정보 업데이트 중 오류 발생:", error);
+              alert("정보를 업데이트하는데 실패했습니다.");
+            }
           });
+
         document
           .getElementById("deleteProfileBtn")
           .addEventListener("click", async function () {
@@ -310,32 +366,32 @@
                 type="number"
                 id="ageInput"
                 placeholder="나이"
-                maxlength="10"
+                maxlength="3"
               />
               <input
                 type="text"
                 id="locationInput"
                 placeholder="사는 곳"
-                maxlength="10"
+                maxlength="20"
               />
               <input
                 type="text"
                 id="mbtiInput"
                 placeholder="MBTI"
-                maxlength="10"
+                maxlength="4"
               />
               <input
                 type="text"
                 id="specialtyInput"
                 placeholder="특기"
-                maxlength="10"
+                maxlength="20"
               />
 
               <input
                 type="text"
                 id="favoriteFoodInput"
                 placeholder="최애 음식"
-                maxlength="10"
+                maxlength="20"
               />
               <button
                 id="saveProfileBtn"

@@ -40,16 +40,30 @@
 
       $("#addbtn").click(async function () {
         let image = $("#image").val();
-        let name = $("#name").val();
+        let name = $("#name").val().trim(); // 사용자 입력에서 앞뒤 공백 제거
 
-        let doc = {
-          image: image,
-          name: name,
-        };
-        await addDoc(collection(db, "members"), doc);
-        alert("추가 완료.");
-        window.location.reload();
+        // 이름 유효성 검사
+        if (name === "") {
+          alert("이름을 입력해주세요."); // 누락된 입력에 대한 알림
+          return; // 함수 실행 종료
+        }
+
+        if (name.length > 10) {
+          alert("이름은 10자 이내로 입력해주세요."); // 길이 제한 초과에 대한 알림
+          return; // 함수 실행 종료
+        }
+
+        // 유효성 검사를 통과한 경우, Firebase에 문서 추가
+        try {
+          await addDoc(collection(db, "members"), { image, name });
+          alert("추가 완료.");
+          window.location.reload(); // 페이지 새로고침으로 목록 업데이트
+        } catch (error) {
+          console.error("멤버 추가 중 오류 발생:", error);
+          alert("멤버를 추가하는데 실패했습니다.");
+        }
       });
+
       let docs = await getDocs(collection(db, "members"));
       docs.forEach((doc) => {
         let row = doc.data();
