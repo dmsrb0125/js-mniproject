@@ -246,15 +246,21 @@
 
           querySnapshot.forEach((doc) => {
             const entry = doc.data();
+            const timestamp = entry.timestamp
+              ? new Date(entry.timestamp.toDate())
+              : new Date();
+
+            const formattedDate = timestamp.toLocaleString();
             const entryElement = `
                   <div class="guestbook-entry">
                     <span class="guestbook-name">${entry.name}:</span>
                     <p class="guestbook-message">${entry.message}</p>
-
+                    <span class="guestbook-timestamp">${formattedDate}</span>
                     <button class="btn btn-primary like-button" data-id="${
                       doc.id
                     }">👍</button>
                     <span class="likes-count"> ${entry.likes || 0}</span>
+                    
                     <button class="btn btn-danger delete-guestbook-entry" data-id="${
                       doc.id
                     }">❌</button>
